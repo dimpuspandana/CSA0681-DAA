@@ -1,0 +1,20 @@
+def process_list(nums):
+    if not nums:
+        return "The list is empty."
+    
+    nums.sort()  # Python's built-in sort, which uses Timsort (O(n log n))
+    
+    return nums[-1]
+
+# Test Cases
+
+# Empty List
+print(process_list([]))  
+
+# Single Element List
+print(process_list([5])) 
+
+# Multiple Elements List
+print(process_list([1, 2, 3, 4, 5]))  
+print(process_list([7, 7, 7, 7, 7]))  
+print(process_list([-10, 2, 3, -4, 5]))  

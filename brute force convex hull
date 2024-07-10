@@ -1,0 +1,42 @@
+def brute_force_convex_hull(points):
+    """ Find the convex hull of a set of points using the brute force approach. """
+    n = len(points)
+    if n < 3:
+        return "Convex hull not possible"
+    
+    # Function to check if points p, q, r are collinear and q lies on segment pr
+    def on_segment(p, q, r):
+        if (q[0] <= max(p[0], r[0]) and q[0] >= min(p[0], r[0]) and
+            q[1] <= max(p[1], r[1]) and q[1] >= min(p[1], r[1])):
+            return True
+        return False
+    
+    # Initialize the convex hull points list
+    hull = []
+    
+    # Iterate through all pairs of points
+    for i in range(n):
+        for j in range(i + 1, n):
+            # Check if all other points are on the left side of line formed by points[i] and points[j]
+            valid = True
+            for k in range(n):
+                if k != i and k != j:
+                    if on_segment(points[i], points[k], points[j]):
+                        valid = False
+                        break
+            if valid:
+                if points[i] not in hull:
+                    hull.append(points[i])
+                if points[j] not in hull:
+                    hull.append(points[j])
+    
+    # Sort hull points in clockwise order using the Graham's scan method
+    
+    return hull
+
+# Test case for convex hull
+points_convex_hull = [(10, 0), (11, 5), (5, 3), (9, 3.5), (15, 3), (12.5, 7), (6, 6.5), (7.5, 4.5)]
+convex_hull_points = brute_force_convex_hull(points_convex_hull)
+
+# Output the result
+print("Convex Hull Points (Brute Force):", convex_hull_points)

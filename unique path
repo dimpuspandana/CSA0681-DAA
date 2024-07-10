@@ -1,0 +1,32 @@
+def uniquePaths(m, n):
+    # Create a dp table with dimensions (m x n)
+    dp = [[0] * n for _ in range(m)]
+    
+    # Initialize the starting position
+    dp[0][0] = 1
+    
+    # Fill the dp table
+    for i in range(m):
+        for j in range(n):
+            if i == 0 and j == 0:
+                continue
+            if i == 0:
+                dp[i][j] = dp[i][j - 1]
+            elif j == 0:
+                dp[i][j] = dp[i - 1][j]
+            else:
+                dp[i][j] = dp[i - 1][j] + dp[i][j - 1]
+    
+    # The result is stored in dp[m-1][n-1]
+    return dp[m - 1][n - 1]
+
+# Test cases
+print("Example 1:")
+m1, n1 = 7, 3
+print("Input:", m1, ",", n1)
+print("Output:", uniquePaths(m1, n1))  # Expected Output: 28
+
+print("\nExample 2:")
+m2, n2 = 3, 2
+print("Input:", m2, ",", n2)
+print("Output:", uniquePaths(m2, n2))  # Expected Output: 3

@@ -1,0 +1,32 @@
+def largeGroupPositions(s):
+    n = len(s)
+    if n < 3:
+        return []
+    
+    large_groups = []
+    start = 0
+    prev_char = s[0]
+    
+    for i in range(1, n):
+        if s[i] != prev_char:
+            if i - start >= 3:
+                large_groups.append([start, i - 1])
+            start = i
+            prev_char = s[i]
+    
+    # Check the last group
+    if n - start >= 3:
+        large_groups.append([start, n - 1])
+    
+    return large_groups
+
+# Test cases
+print("Example 1:")
+s1 = "abbxxxxzzy"
+print("Input:", s1)
+print("Output:", largeGroupPositions(s1))  # Expected Output: [[3, 6]]
+
+print("\nExample 2:")
+s2 = "abc"
+print("Input:", s2)
+print("Output:", largeGroupPositions(s2))  # Expected Output: []

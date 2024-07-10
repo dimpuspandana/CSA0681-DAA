@@ -1,0 +1,53 @@
+import itertools
+
+def total_value(items, values):
+    """ Calculate the total value of the selected items. """
+    return sum(values[i] for i in items)
+
+def is_feasible(items, weights, capacity):
+    """ Check if the selected items can fit in the knapsack. """
+    return sum(weights[i] for i in items) <= capacity
+
+def knapsack(weights, values, capacity):
+    """ Solve the 0-1 Knapsack Problem using exhaustive search. """
+    n = len(weights)
+    
+    # Generate all possible subsets of items
+    all_subsets = []
+    for i in range(1, n + 1):
+        all_subsets.extend(itertools.combinations(range(n), i))
+    
+    max_value = 0
+    optimal_selection = []
+    
+    # Iterate through all subsets
+    for subset in all_subsets:
+        if is_feasible(subset, weights, capacity):
+            value = total_value(subset, values)
+            if value > max_value:
+                max_value = value
+                optimal_selection = subset
+    
+    return max_value, optimal_selection
+
+# Test Cases
+weights1 = [2, 3, 1]
+values1 = [4, 5, 3]
+capacity1 = 4
+
+weights2 = [1, 2, 3, 4]
+values2 = [2, 4, 6, 3]
+capacity2 = 6
+
+# Solve knapsack problem for Test Case 1
+max_value1, optimal_selection1 = knapsack(weights1, values1, capacity1)
+print("Test Case 1:")
+print(f"Optimal Selection: {optimal_selection1}")
+print(f"Total Value: {max_value1}")
+print()
+
+# Solve knapsack problem for Test Case 2
+max_value2, optimal_selection2 = knapsack(weights2, values2, capacity2)
+print("Test Case 2:")
+print(f"Optimal Selection: {optimal_selection2}")
+print(f"Total Value: {max_value2}")

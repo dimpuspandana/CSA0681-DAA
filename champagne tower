@@ -1,0 +1,30 @@
+def champagneTower(poured, query_row, query_glass):
+    # Initialize the pyramid with zeroes
+    pyramid = [[0.0] * i for i in range(1, 102)]
+    pyramid[0][0] = poured  # Pour champagne into the top glass
+    
+    # Traverse each row and each glass in the row
+    for r in range(query_row + 1):
+        for c in range(r + 1):
+            overflow = (pyramid[r][c] - 1.0) / 2.0  # Calculate overflow
+            if overflow > 0:
+                pyramid[r + 1][c] += overflow  # Overflow to left child
+                pyramid[r + 1][c + 1] += overflow  # Overflow to right child
+    
+    # Return the champagne in the queried glass
+    return min(1.0, pyramid[query_row][query_glass])
+
+# Test cases
+print("Example 1:")
+poured1 = 1
+query_row1 = 1
+query_glass1 = 1
+print("Input:", poured1, ",", query_row1, ",", query_glass1)
+print("Output:", champagneTower(poured1, query_row1, query_glass1))  # Expected Output: 0.0
+
+print("\nExample 2:")
+poured2 = 2
+query_row2 = 1
+query_glass2 = 1
+print("Input:", poured2, ",", query_row2, ",", query_glass2)
+print("Output:", champagneTower(poured2, query_row2, query_glass2))  # Expected Output: 0.5

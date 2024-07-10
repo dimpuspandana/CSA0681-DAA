@@ -1,0 +1,28 @@
+def find_kth_missing(arr, k):
+    # Initialize the current missing count and the current number to check
+    missing_count = 0
+    current = 1
+    
+    # Iterate through the array
+    for num in arr:
+        # While current number is less than the current array element
+        while current < num:
+            missing_count += 1
+            # If missing count reaches k, return the current number
+            if missing_count == k:
+                return current
+            current += 1
+        current = num + 1
+    
+    # If end of array is reached and kth missing number hasn't been found
+    while missing_count < k:
+        missing_count += 1
+        if missing_count == k:
+            return current
+        current += 1
+
+    return -1  # This line should theoretically never be reached
+
+# Test cases
+print(find_kth_missing([2, 3, 4, 7, 11], 5))  # Output: 9
+print(find_kth_missing([1, 2, 3, 4], 2))      # Output: 6
